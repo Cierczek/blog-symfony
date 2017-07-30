@@ -1,0 +1,17 @@
+{% extends "BlogBundle::layout.html.twig" %}
+
+{% block content %}
+    <div class="col-lg-4">
+        
+
+        <h2>Editar Categoria</h2>
+        {{form_start(form)}}
+        {{ form_row(form.name) }}
+        <br>
+        {{ form_row(form.description) }}
+        <br>
+        {{form_end(form)}}
+    </div>
+
+    <div class="clearfix"></div>
+{% endblock %}

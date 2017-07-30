@@ -1,0 +1,55 @@
+{% extends "BlogBundle::layout.html.twig" %}
+
+{% block content %}
+    <div class="col-lg-6">
+        {% block form_errors %}
+            {% spaceless %}
+                {% if errors|length > 0 %}
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        {% for error in errors %}
+                            {{ error.message }}<br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endspaceless %}
+        {% endblock form_errors %}
+        {% block flash_messages %}
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type }} alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        {{ message | raw }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endblock %}
+        <h2>Todas las categorias</h2>
+        <a href="{{path("blog_add_categories")}}" class="btn btn-success">Añadir categoria</a>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                    <tr>
+                        <td>{{category.name}}</td>
+                        <td>{{category.description}}</td>
+                        <td><a href="{{path("blog_edit_categories", {"id":category.id})}}" class="btn btn-warning">Editar</a></td>
+                        {% if category.entries|length == 0 %}
+                        <td><a href="{{path("blog_delete_categories", {"id":category.id})}}" class="btn btn-danger">Eliminar</a></td>
+                        {% else %}
+                        <td>Etiqueta en uso</td>    
+                        {% endif %} 
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}
